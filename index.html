@@ -1,13 +1,223 @@
-The Owls have landed on MegaETH. 🦉⚡
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mega Owls</title>
+  <style>
+    :root {
+      --bg-main: #494646;
+      --bg-secondary: #686464;
+      --accent: #131212;
+      --accent-soft: #a4a2a2;
+      --text-main: #1f1e1e;
+      --text-soft: #1f1e1e;
+      --card-bg: #d9d3d3;
+      --border: rgba(255, 255, 255, 0.3);
+    }
 
-We don't just fly; we bring the chaos.
-The most wise and fast collection is here to take over.
+    * { box-sizing: border-box; }
 
-Grab your GTD spot now:
-🔗 [megaethowl.github.io]
+    body {
+      background-color: var(--bg-main);
+      font-family: 'Poppins', 'Nunito', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text-main);
+      background-image: url('bg image.jpg');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      overflow-x: hidden;
+    }
 
-🦉 Follow.
-🦉 Quote.
-🦉 Join the nest.
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(2deg); }
+    }
 
-#MegaOwls #MegaETH $MEGA
+    .leaderboard-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 20px;
+      background: var(--accent);
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      color: white;
+      z-index: 1000;
+    }
+
+    .form-container {
+      background-color: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      padding: 40px 30px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .hidden { display: none !important; }
+
+    .imageview { cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+    .imageview img {
+      max-width: 80vmin;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    input {
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      padding: 14px;
+      margin: 10px 0 20px 0;
+      border-radius: 16px;
+      border: 2px solid var(--bg-secondary);
+      width: 100%;
+      text-align: center;
+      outline: none;
+    }
+
+    button {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 18px;
+      border: none;
+      background-color: var(--accent);
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover { background-color: #FFB347; transform: translateY(-4px); }
+
+    .tasks { text-align: left; }
+    .tasks p {
+      padding: 16px;
+      background: rgba(185, 189, 212, 0.1);
+      border-radius: 16px;
+      border-left: 4px solid var(--accent);
+      margin: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .leaderboard-popup {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 999;
+    }
+
+    .leaderboard-content {
+      background: var(--card-bg);
+      padding: 40px 30px;
+      border-radius: 24px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="leaderboard-btn" onclick="togglePopup()">Leaderboard</button>
+
+  <div class="imageview" id="step_1">
+    <img src="owl.png" alt="Mega Owls">
+  </div>
+
+  <div class="form-container hidden" id="form_steps">
+    <div id="div_username">
+      <h3>enter your X username</h3>
+      <input type="text" id="x_username" placeholder="@username">
+      <button onclick="showStep('tasks')">next</button>
+    </div>
+
+    <div id="div_tasks" class="hidden">
+      <h3>Wise eyes, Mega fast.</h3>
+      <div class="tasks">
+        <p>Follow @Megaowlnft <a href="https://x.com/Megaowlnft" target="_blank"><button style="padding:5px 10px; font-size:12px">go</button></a></p>
+        
+        <p>Comment EVM <a href="https://x.com/Megaowlnft" target="_blank"><button style="padding:5px 10px; font-size:12px">go</button></a></p>
+        
+        <p>Quote Pinned Post <a href="https://x.com/Megaowlnft" target="_blank"><button style="padding:5px 10px; font-size:12px">go</button></a></p>
+        
+        <input type="url" id="repost_link" placeholder="quote link">
+      </div>
+      <button onclick="showStep('final_action')">done</button>
+    </div>
+
+    <div id="div_final_action" class="hidden">
+        <h3>ready to claim?</h3>
+        <p style="font-size: 13px; margin-bottom: 20px;">Click below to grab your spot.</p>
+        <button id="final_submit">GRAB YOUR SPOT</button>
+    </div>
+
+    <div id="div_final" class="hidden">
+      <h3>✅ Your spot has been secured</h3>
+      <p style="font-size: 14px;">Make sure you clicked 'Post' on X!</p>
+    </div>
+  </div>
+
+  <div class="leaderboard-popup hidden" id="popup">
+    <div class="leaderboard-content">
+      <h2>🏆 Leaderboard Coming Soon</h2>
+      <p>you're early...</p>
+      <button onclick="togglePopup()">close</button>
+    </div>
+  </div>
+
+  <script>
+    const s1 = document.getElementById('step_1');
+    const form = document.getElementById('form_steps');
+
+    s1.onclick = () => {
+      s1.classList.add('hidden');
+      form.classList.remove('hidden');
+    };
+
+    function showStep(step) {
+      if (step === 'tasks') {
+        if (!document.getElementById('x_username').value) return alert("Please enter username!");
+        document.getElementById('div_username').classList.add('hidden');
+        document.getElementById('div_tasks').classList.remove('hidden');
+      } else if (step === 'final_action') {
+        if (!document.getElementById('repost_link').value) return alert("Please provide Quote Link!");
+        document.getElementById('div_tasks').classList.add('hidden');
+        document.getElementById('div_final_action').classList.remove('hidden');
+      }
+    }
+
+    function togglePopup() {
+      document.getElementById('popup').classList.toggle('hidden');
+    }
+
+    document.getElementById('final_submit').onclick = () => {
+      // Teks postingan yang disesuaikan dengan permintaan Anda
+      const text = encodeURIComponent(
+        `Making NFTs fun again! 🦉✨\n\n` +
+        `Introducing Mega Owls\n` +
+        `Your wise parade of mega chaos\n` +
+        `Network: MegaETH\n\n` +
+        `Grab your spot → megaethowl.github.io\n\n` +
+        `Very limited spots available! ⚡\n` +
+        `#MegaOwls #MegaETH #WL`
+      );
+
+      window.open(`https://x.com/intent/tweet?text=${text}`, '_blank');
+      
+      document.getElementById('div_final_action').classList.add('hidden');
+      document.getElementById('div_final').classList.remove('hidden');
+    };
+  </script>
+</body>
+</html>
